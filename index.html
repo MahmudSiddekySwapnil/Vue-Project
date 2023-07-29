@@ -11,9 +11,9 @@
 <body>
 
 <navbar
-:pages="pages"
-:active-page="activePage"
-:nav-link-click="(index)=>activePage=index"
+        :pages="pages"
+        :active-page="activePage"
+        :nav-link-click="(index)=>activePage=index"
 >
 </navbar>
 <page-viewer
@@ -60,40 +60,40 @@
     });
 
 
-    app.component('navbar',{
-        props:['pages','activePage','navLinkClick'],
+    app.component('navbar', {
+        props: ['pages', 'activePage', 'navLinkClick'],
         template: `
-      <nav :class="[\`navbar-\${theme}\`,\`bg-\${theme}\`,'navbar','navbar-expand-lg']"
-      >
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">WebSiteName</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li class="nav-item"
-              v-for="(page,index) in pages" :key="index">
-            <a class="nav-link"
-               :class="{active: activePage == index}"
-               :href="page.link.url"
-               :title="\`This button goes to \${page.link.text} page\`"
-               @click.prevent="navLinkClick(index)"
-            >{{ page.link.text }}</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <button
-              class="btn btn-primary"
-              @click.prevent="changeTheme()"
+          <nav :class="[\`navbar-\${theme}\`,\`bg-\${theme}\`,'navbar','navbar-expand-lg']"
           >
-            Toggle Nav
-          </button>
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+              <li class="nav-item"
+                  v-for="(page,index) in pages" :key="index">
+                <a class="nav-link"
+                   :class="{active: activePage == index}"
+                   :href="page.link.url"
+                   :title="\`This button goes to \${page.link.text} page\`"
+                   @click.prevent="navLinkClick(index)"
+                >{{ page.link.text }}</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <button
+                  class="btn btn-primary"
+                  @click.prevent="changeTheme()"
+              >
+                Toggle Nav
+              </button>
 
-        </form>
-      </div>
-      </nav>`,
-        data(){
-            return{
-                theme:'light'
+            </form>
+          </div>
+          </nav>`,
+        data() {
+            return {
+                theme: 'light'
             }
         },
         methods: {

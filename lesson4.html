@@ -9,13 +9,34 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<navbar
-:pages="pages"
-:active-page="activePage"
-:nav-link-click="(index)=>activePage=index"
+<nav :class="[`navbar-${theme}`,`bg-${theme}`,'navbar','navbar-expand-lg']"
 >
-</navbar>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="nav-item"
+                v-for="(page,index) in pages" :key="index">
+                <a class="nav-link"
+                   :class="{active: activePage == index}"
+                   :href="page.link.url"
+                   :title="`This button goes to ${page.link.text} page`"
+                   @click.prevent="activePage = index"
+                >{{ page.link.text }}</a>
+            </li>
+        </ul>
+        <form class="d-flex">
+            <button
+                    class="btn btn-primary"
+                    @click.prevent="changeTheme()"
+            >
+                Toggle Nav
+            </button>
+
+        </form>
+    </div>
+</nav>
 <page-viewer
         :page="pages[activePage]">
 </page-viewer>
@@ -26,6 +47,7 @@
         data() {
             return {
                 activePage: 0,
+                theme: 'light',
                 pages: [
                     {
                         link: {text: 'Home', url: 'home.html'},
@@ -46,56 +68,6 @@
                 ]
             };
         },
-
-    });
-
-
-    app.component('page-viewer', {
-        props: ['page'],
-        template: `
-          <div class="container">
-          <h1>{{ page.pageTitle }}</h1>
-          <p>{{ page.content }}</p>
-          </div>`
-    });
-
-
-    app.component('navbar',{
-        props:['pages','activePage','navLinkClick'],
-        template: `
-      <nav :class="[\`navbar-\${theme}\`,\`bg-\${theme}\`,'navbar','navbar-expand-lg']"
-      >
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">WebSiteName</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li class="nav-item"
-              v-for="(page,index) in pages" :key="index">
-            <a class="nav-link"
-               :class="{active: activePage == index}"
-               :href="page.link.url"
-               :title="\`This button goes to \${page.link.text} page\`"
-               @click.prevent="navLinkClick(index)"
-            >{{ page.link.text }}</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <button
-              class="btn btn-primary"
-              @click.prevent="changeTheme()"
-          >
-            Toggle Nav
-          </button>
-
-        </form>
-      </div>
-      </nav>`,
-        data(){
-            return{
-                theme:'light'
-            }
-        },
         methods: {
             changeTheme() {
                 let theme = 'light';
@@ -107,6 +79,14 @@
         }
     });
 
+    app.component('page-viewer', {
+        props: ['page'],
+        template: `
+          <div class="container">
+          <h1>{{ page.pageTitle }}</h1>
+          <p>{{ page.content }}</p>
+          </div>`
+    });
     app.mount('body');
 
 
